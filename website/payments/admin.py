@@ -144,7 +144,9 @@ class PaymentAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         if isinstance(obj, Payment):
-            return not (obj.batch and obj.batch.processed)
+            if obj.batch and obj.batch.processed:
+                return False
+
         return super().has_delete_permission(request, obj)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -443,7 +445,9 @@ class BatchAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         if isinstance(obj, Batch):
-            return not obj.processed
+            if obj.processed:
+                return False
+
         return super().has_delete_permission(request, obj)
 
     def get_urls(self) -> list:

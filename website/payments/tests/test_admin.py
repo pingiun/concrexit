@@ -195,7 +195,7 @@ class PaymentAdminTest(TestCase):
             ),
             {"post": "yes"},
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 403)
         self.assertTrue(Payment.objects.filter(id=payment_batch_processed.id).exists())
 
     @freeze_time("2020-01-01")
@@ -681,9 +681,8 @@ class BatchAdminTest(TestCase):
         self.admin = admin.BatchAdmin(Batch, admin_site=self.site)
         self.rf = RequestFactory()
 
-    def test_delete_model(self) -> None:
+    def test_delete_model_succeed(self) -> None:
         batch = Batch.objects.create()
-
         response = self.client.post(
             reverse("admin:payments_batch_delete", args=(batch.id,)),
             {"post": "yes"},  # Add data to confirm deletion in admin
@@ -691,9 +690,8 @@ class BatchAdminTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Payment.objects.filter(id=batch.id).exists())
 
-        batch = Batch.objects.create()
-        batch.processed = True
-        batch.save()
+    def test_delete_model_fail(self) -> None:
+        batch = Batch.objects.create(processed=True)
         response = self.client.post(
             reverse("admin:payments_payment_delete", args=(batch.id,)), {"post": "yes"},
         )

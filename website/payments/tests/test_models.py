@@ -214,7 +214,27 @@ class BatchModelTest(TestCase):
             processed_by=self.user2,
             batch=batch,
         )
-        self.assertEqual(batch.total_amount, 36 + 37)
+        self.assertEqual(batch.total_amount(), 36 + 37)
+
+    def test_count_batch(self) -> None:
+        batch = Batch.objects.create(id=1)
+        Payment.objects.create(
+            type=Payment.TPAY,
+            amount=37,
+            processing_date=timezone.now() + datetime.timedelta(days=1),
+            paid_by=self.user1,
+            processed_by=self.user2,
+            batch=batch,
+        )
+        Payment.objects.create(
+            type=Payment.TPAY,
+            amount=36,
+            processing_date=timezone.now(),
+            paid_by=self.user1,
+            processed_by=self.user2,
+            batch=batch,
+        )
+        self.assertEqual(batch.payments_count(), 2)
 
     def test_absolute_url(self) -> None:
         b1 = Batch.objects.create(id=1)
