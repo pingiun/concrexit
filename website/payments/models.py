@@ -151,20 +151,26 @@ class Batch(models.Model):
     def start_date(self) -> datetime.datetime:
         return self.payments_set.earliest("processing_date").processing_date
 
-    start_date.short_description = "first payment in batch"
+    start_date.admin_order_field = "first payment in batch"
+    start_date.short_description = _("first payment in batch")
 
     def end_date(self) -> datetime.datetime:
         return self.payments_set.latest("processing_date").processing_date
 
-    end_date.short_description = "last payment in batch"
+    end_date.admin_order_field = "last payment in batch"
+    end_date.short_description = _("last payment in batch")
 
-    @property
     def total_amount(self) -> Decimal:
         return sum([payment.amount for payment in self.payments_set.all()])
 
-    @property
+    total_amount.admin_order_field = "total amount"
+    total_amount.short_description = _("total amount")
+
     def payments_count(self) -> Decimal:
-        return len(self.payments_set.all())
+        return self.payments_set.all().count()
+
+    payments_count.admin_order_field = "payments count"
+    payments_count.short_description = _("payments count")
 
     class Meta:
         verbose_name = _("batch")

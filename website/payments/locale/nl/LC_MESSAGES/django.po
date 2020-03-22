@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-26 20:47+0100\n"
-"PO-Revision-Date: 2020-02-26 20:53+0100\n"
+"POT-Creation-Date: 2020-03-22 10:33+0100\n"
+"PO-Revision-Date: 2020-03-22 10:36+0100\n"
 "Last-Translator: Job Doesburg <job.doesburg@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -16,11 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 #: admin.py
 msgid "paid by"
 msgstr "betaald door"
+
+#: admin.py
+msgid "in batch"
+msgstr "in batch"
 
 #: admin.py
 msgid "processed by"
@@ -257,6 +261,22 @@ msgid "description of batch"
 msgstr "beschrijving van batch"
 
 #: models.py
+msgid "first payment in batch"
+msgstr "eerste betaling in batch"
+
+#: models.py
+msgid "last payment in batch"
+msgstr "laatste betaling in batch"
+
+#: models.py
+msgid "total amount"
+msgstr "totaal bedrag"
+
+#: models.py
+msgid "payments count"
+msgstr "aantal betalingen"
+
+#: models.py
 msgid "batch"
 msgstr "batch"
 
@@ -308,6 +328,10 @@ msgstr "Deze datum kan niet voor de vanaf datum liggen."
 msgid "This field cannot have a value."
 msgstr "Dit veld mag geen waarde hebben."
 
+#: services.py
+msgid "This user does not have Thalia Pay enabled"
+msgstr "Deze gebruiker heeft Thalia Pay niet aan staan"
+
 #: templates/admin/payments/change_form.html
 msgid "Export batch"
 msgstr "Exporteer batch"
@@ -333,8 +357,8 @@ msgid "Process (wire payment)"
 msgstr "Verwerk (overboeking)"
 
 #: templates/admin/payments/change_list.html
-msgid "New batch from previous month of Thalia Pay payments"
-msgstr "Nieuwe batch van TPAY betalingen van vorige maand"
+msgid "New batch from unbatched Thalia Pay payments"
+msgstr "Nieuwe batch van Thalia Pay betalingen nog niet in een batch"
 
 #: templates/payments/bankaccount_form.html
 msgid "add bank account"
