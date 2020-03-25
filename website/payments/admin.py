@@ -86,10 +86,6 @@ class PaymentAdmin(admin.ModelAdmin):
     ordering = ("-created_at", "processing_date")
     autocomplete_fields = ("paid_by", "processed_by")
     actions = [
-        "process_cash_selected",
-        "process_card_selected",
-        "process_tpay_selected",
-        "process_wire_selected",
         "export_csv",
     ]
 
@@ -136,61 +132,6 @@ class PaymentAdmin(admin.ModelAdmin):
         if not obj:
             return "created_at", "type", "processing_date", "processed_by"
         return super().get_readonly_fields(request, obj)
-
-    def get_actions(self, request: HttpRequest) -> OrderedDict:
-        """Get the actions for the payments"""
-        """Hide the processing actions if the right permissions are missing"""
-        actions = super().get_actions(request)
-        if not request.user.has_perm("payments.process_payments"):
-            del actions["process_cash_selected"]
-            del actions["process_card_selected"]
-            del actions["process_tpay_selected"]
-            del actions["process_wire_selected"]
-        return actions
-
-     # TODO fix this
-
-    def process_cash_selected(self, request: HttpRequest, queryset: QuerySet) -> None:
-        """Process the selected payment as cash"""
-        if request.user.has_perm("payments.process_payments"):
-            updated_payments = services.process_payment(
-                queryset, request.member, Payment.CASH
-            )
-            self._process_feedback(request, updated_payments)
-
-    process_cash_selected.short_description = _("Process selected payments (cash)")
-
-    def process_card_selected(self, request: HttpRequest, queryset: QuerySet) -> None:
-        """Process the selected payment as card"""
-        if request.user.has_perm("payments.process_payments"):
-            updated_payments = services.process_payment(
-                queryset, request.member, Payment.CARD
-            )
-            self._process_feedback(request, updated_payments)
-
-    process_card_selected.short_description = _("Process selected payments (card)")
-
-    def process_tpay_selected(self, request: HttpRequest, queryset: QuerySet) -> None:
-        """Process the selected payment as Thalia Pay"""
-        if request.user.has_perm("payments.process_payments"):
-            updated_payments = services.process_payment(
-                queryset, request.member, Payment.TPAY
-            )
-            self._process_feedback(request, updated_payments)
-
-    process_tpay_selected.short_description = _(
-        "Process selected payments (Thalia Pay, only if enabled)"
-    )
-
-    def process_wire_selected(self, request: HttpRequest, queryset: QuerySet) -> None:
-        """Process the selected payment as wire"""
-        if request.user.has_perm("payments.process_payments"):
-            updated_payments = services.process_payment(
-                queryset, request.member, Payment.WIRE
-            )
-            self._process_feedback(request, updated_payments)
-
-    process_wire_selected.short_description = _("Process selected payments (wire)")
 
     def _process_feedback(self, request, updated_payments: list) -> None:
         """Show a feedback message for the processing result"""

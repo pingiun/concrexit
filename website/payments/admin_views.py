@@ -22,7 +22,7 @@ class PaymentAdminView(View):
     """
 
     def post(self, request, *args, **kwargs):
-        payable = # Payment.objects.filter(pk=kwargs["pk"]) # TODO fix
+        payable = None # Payment.objects.filter(pk=kwargs["pk"]) # TODO fix
 
         if not ("type" in request.POST):
             return redirect("admin:payments_payment_change", kwargs["pk"])
