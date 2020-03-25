@@ -168,12 +168,6 @@ class RegistrationAdmin(admin.ModelAdmin):
     def name(obj):
         return obj.get_full_name()
 
-    @staticmethod
-    def payment_status(obj):
-        payment = obj.payment
-        # TODO improve this
-        return payment
-
     def reject_selected(self, request, queryset):
         """Reject the selected entries"""
         if request.user.has_perm("registrations.review_entries"):
