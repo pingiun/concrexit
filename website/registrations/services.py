@@ -3,7 +3,6 @@ import string
 import unicodedata
 from typing import Union
 
-from django.conf import settings
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.admin.options import get_content_type_for_model
 from django.contrib.auth import get_user_model
@@ -148,7 +147,6 @@ def accept_entries(user_id: int, queryset: QuerySet) -> int:
 
         entry.status = Entry.STATUS_ACCEPTED
         entry.updated_at = timezone.now()
-        entry.payment = _create_payment_for_entry(entry)
 
         log_obj = None
 
@@ -156,11 +154,11 @@ def accept_entries(user_id: int, queryset: QuerySet) -> int:
             if entry.registration.username is None:
                 entry.registration.username = _generate_username(entry.registration)
                 entry.registration.save()
-            emails.send_registration_accepted_message(entry.registration, entry.payment)
+            emails.send_registration_accepted_message(entry.registration)
             log_obj = entry.registration
         except Registration.DoesNotExist:
             try:
-                emails.send_renewal_accepted_message(entry.renewal, entry.payment)
+                emails.send_renewal_accepted_message(entry.renewal)
                 log_obj = entry.renewal
             except Renewal.DoesNotExist:
                 pass
@@ -191,13 +189,9 @@ def revert_entry(user_id: int, entry: Entry) -> None:
     if not (entry.status in [Entry.STATUS_ACCEPTED, Entry.STATUS_REJECTED]):
         return
 
-    payment = entry.payment
     entry.status = Entry.STATUS_REVIEW
     entry.updated_at = timezone.now()
-    entry.payment = None
     entry.save()
-    if payment is not None:
-        payment.delete()
 
     log_obj = None
 
@@ -218,53 +212,6 @@ def revert_entry(user_id: int, entry: Entry) -> None:
             action_flag=CHANGE,
             change_message="Revert status to review",
         )
-
-
-def _create_payment_for_entry(entry: Entry) -> Payment:
-    """
-    Create payment model for entry
-
-    :param entry: Registration or Renewal model
-    :type entry: Entry
-    :return: Payment connected to the entry with the right price
-    :rtype: Payment
-    """
-    amount = settings.MEMBERSHIP_PRICES[entry.length]
-    if entry.contribution and entry.membership_type == Membership.BENEFACTOR:
-        amount = entry.contribution
-    notes = f"Membership registration. {entry.get_membership_type_display()}."
-    topic = f"Member registration [{entry.membership_type.upper()}]"
-
-    try:
-        renewal = entry.renewal
-        membership = renewal.member.latest_membership
-        notes = f"Membership renewal. {entry.get_membership_type_display()}."
-        topic = f"Member renewal [{entry.membership_type.upper()}]"
-        # Having a latest membership which has an until date implies that this
-        # membership lasts/lasted till the end of the lecture year
-        # This means it's possible to renew the 'year' membership
-        # to a 'study' membership and the price should be adjusted since
-        # it is considered an upgrade without paying twice
-        # The rules for this behaviour are taken from the HR
-
-        # Since it is possible for people to renew their membership
-        # but processing to occur _after_ the membership ended
-        # we're checking if that is the case so that these members
-        # still get the discount price
-        if (
-            membership is not None
-            and membership.until is not None
-            and entry.created_at.date() < membership.until
-            and renewal.length == Entry.MEMBERSHIP_STUDY
-        ):
-            amount = (
-                settings.MEMBERSHIP_PRICES[Entry.MEMBERSHIP_STUDY]
-                - settings.MEMBERSHIP_PRICES[Entry.MEMBERSHIP_YEAR]
-            )
-    except Renewal.DoesNotExist:
-        pass
-
-    return Payment.objects.create(amount=amount, notes=notes, topic=topic)
 
 
 def _create_member_from_registration(registration: Registration) -> Member:
@@ -403,7 +350,7 @@ def process_payment(payment: Payment) -> None:
     :type payment: Payment
     """
 
-    if not payment.processed:
+    if not payment:
         return
 
     try:
@@ -434,7 +381,6 @@ def process_payment(payment: Payment) -> None:
 
     # If member was retrieved, then create a new membership
     if member is not None:
-        Payment.objects.filter(pk=payment.pk).update(paid_by=member)
         membership = _create_membership_from_entry(entry, member)
         entry.membership = membership
         entry.status = Entry.STATUS_COMPLETED

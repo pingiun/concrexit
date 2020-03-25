@@ -68,9 +68,8 @@ class Entry(models.Model):
     contribution = models.FloatField(
         verbose_name=_("contribution"),
         validators=[MinValueValidator(settings.MEMBERSHIP_PRICES["year"])],
-        default=settings.MEMBERSHIP_PRICES["year"],
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
     )
 
     no_references = models.BooleanField(
@@ -104,11 +103,8 @@ class Entry(models.Model):
         if self.status != self.STATUS_ACCEPTED and self.status != self.STATUS_REJECTED:
             self.updated_at = timezone.now()
 
-        if (
-            self.contribution is not None
-            and self.membership_type != Membership.BENEFACTOR
-        ):
-            self.contribution = None
+        if self.contribution is None:
+            self.contribution = settings.MEMBERSHIP_PRICES[self.length]
         elif self.membership_type == Membership.BENEFACTOR:
             self.length = self.MEMBERSHIP_YEAR
 

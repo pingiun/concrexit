@@ -148,6 +148,8 @@ class PaymentAdmin(admin.ModelAdmin):
             del actions["process_wire_selected"]
         return actions
 
+     # TODO fix this
+
     def process_cash_selected(self, request: HttpRequest, queryset: QuerySet) -> None:
         """Process the selected payment as cash"""
         if request.user.has_perm("payments.process_payments"):
@@ -205,9 +207,9 @@ class PaymentAdmin(admin.ModelAdmin):
         urls = super().get_urls()
         custom_urls = [
             path(
-                "<uuid:pk>/process/",
+                "create_payment/",
                 self.admin_site.admin_view(admin_views.PaymentAdminView.as_view()),
-                name="payments_payment_process",
+                name="payments_pay",
             ),
         ]
         return custom_urls + urls

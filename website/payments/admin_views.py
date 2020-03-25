@@ -22,20 +22,20 @@ class PaymentAdminView(View):
     """
 
     def post(self, request, *args, **kwargs):
-        payment = Payment.objects.filter(pk=kwargs["pk"])
+        payable = # Payment.objects.filter(pk=kwargs["pk"]) # TODO fix
 
         if not ("type" in request.POST):
             return redirect("admin:payments_payment_change", kwargs["pk"])
 
-        result = services.process_payment(payment, request.member, request.POST["type"])
+        result = services.create_payment(payable, request.member, request.POST["type"])
 
-        if len(result) > 0:
+        if result:
             messages.success(
-                request, _("Successfully processed %s.") % model_ngettext(payment, 1)
+                request, _("Successfully paid %s.") % model_ngettext(payable.payment_topic, 1)
             )
         else:
             messages.error(
-                request, _("Could not process %s.") % model_ngettext(payment, 1)
+                request, _("Could not pay %s.") % model_ngettext(payable.payment_topic, 1)
             )
 
         if "next" in request.POST:
