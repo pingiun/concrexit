@@ -12,6 +12,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from members.models import Membership, Profile
+from payments.models import Payable
 from utils import countries
 
 
@@ -136,8 +137,24 @@ class Entry(models.Model):
         )
 
 
-class Registration(Entry):
+class Registration(Entry, Payable):
     """Describes a new registration for the association"""
+
+    @property
+    def payment_amount(self):
+        return self.contribution
+
+    @property
+    def payment_topic(self):
+        return f"Membership registration {self.membership_type} ({self.length})"
+
+    @property
+    def payment_notes(self):
+        return f"Created at {self.created_at}. Confirmed at {self.updated_at}."
+
+    @property
+    def payment_payer(self):
+        pass  # TODO
 
     # ---- Personal information -----
 
@@ -327,6 +344,11 @@ class Registration(Entry):
 
 class Renewal(Entry):
     """Describes a renewal for the association membership"""
+
+    @property
+    def payment_topic(self):
+        return f"Membership renewal {self.membership_type} ({self.length})"
+
 
     member = models.ForeignKey(
         "members.Member",
