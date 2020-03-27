@@ -116,7 +116,7 @@ class RegistrationAdmin(admin.ModelAdmin):
     def formfield_for_dbfield(self, db_field, request, **kwargs):
         field = super().formfield_for_dbfield(db_field, request, **kwargs)
         if db_field.name == "payment":
-            return Field(widget=PaymentWidget, initial=field.initial, required=False)
+            return Field(widget=PaymentWidget, initial=field.initial, required=False) #TODO @sebas
         return field
 
     def changeform_view(self, request, object_id=None, form_url="", extra_context=None):

@@ -13,6 +13,7 @@ class PaymentWidget(Widget):
     template_name = "payments/widgets/payment.html"
 
     def get_context(self, name, value, attrs) -> dict:
+        # TODO @sebas
         context = super().get_context(name, value, attrs)
         if value:
             payment = Payment.objects.get(pk=value)

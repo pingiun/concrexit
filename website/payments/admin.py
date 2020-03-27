@@ -148,9 +148,9 @@ class PaymentAdmin(admin.ModelAdmin):
         urls = super().get_urls()
         custom_urls = [
             path(
-                "create_payment/",
+                "<uuid:pk>/process/",
                 self.admin_site.admin_view(admin_views.PaymentAdminView.as_view()),
-                name="payments_pay",
+                name="payments_payment_process", #TODO @sebas
             ),
         ]
         return custom_urls + urls
