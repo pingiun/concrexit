@@ -6,7 +6,7 @@ from utils.models.signals import suspendingreceiver
 
 
 @suspendingreceiver(
-    post_save, sender="payments.Payment", dispatch_uid="registrations_payment_process"
+    post_save, sender="payments.Payment", dispatch_uid="registrations_create_payment"
 )
 def post_payment_save(sender, instance, **kwargs):
     """Process a payment when it is saved"""

@@ -16,7 +16,7 @@ from payments.models import Payable
 from utils import countries
 
 
-class Entry(models.Model):
+class Entry(models.Model, Payable):
     """Describes a registration entry"""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -103,12 +103,18 @@ class Entry(models.Model):
         return self.contribution
 
     @property
-    def payment_topic(self):
-        return f"Membership registration {self.membership_type} ({self.length})"
+    def payment_payer(self):
+        if self.membership:
+            return self.membership.user
+        return None
 
     @property
     def payment_notes(self):
         return f"Created at {self.created_at}. Confirmed at {self.updated_at}."
+
+    @property
+    def payment_topic(self):
+        return f"Membership registration {self.membership_type} ({self.length})"
 
     def save(
         self, force_insert=False, force_update=False, using=None, update_fields=None
@@ -149,7 +155,7 @@ class Entry(models.Model):
         )
 
 
-class Registration(Entry, Payable):
+class Registration(Entry):
     """Describes a new registration for the association"""
 
     # ---- Personal information -----
@@ -267,10 +273,6 @@ class Registration(Entry, Payable):
     optin_birthday = models.BooleanField(
         verbose_name=_("birthday calendar opt-in"), default=False
     )
-
-    @property
-    def payment_payer(self):
-        raise NotImplementedError # TODO
 
     def get_full_name(self):
         full_name = "{} {}".format(self.first_name, self.last_name)

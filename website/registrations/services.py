@@ -353,6 +353,8 @@ def process_payment(payment: Payment) -> None:
     if not payment:
         return
 
+    print(payment.id)
+
     try:
         entry = payment.registrations_entry
     except Entry.DoesNotExist:
@@ -367,6 +369,8 @@ def process_payment(payment: Payment) -> None:
         registration = entry.registration
         # Create user and member
         member = _create_member_from_registration(registration)
+        payment.paid_by = member
+        payment.save()
     except Registration.DoesNotExist:
         try:
             # Get member from renewal
