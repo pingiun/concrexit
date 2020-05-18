@@ -9,28 +9,28 @@ license = "AGPL-3.0-or-later"
 python = "^3.7"
 django-localflavor = { git = "https://github.com/django/django-localflavor.git", rev="d2ce849484640999a2fde7106407f7217a3c95c1" }
 freezegun = "0.3.15"
-bleach = "3.1.4"
+bleach = "3.1.5"
 django-tinymce4-lite = "1.8.0"
 djangorestframework = "3.11.0"
 django-ical = "1.7.0"
 django-libsass = "0.8.0"
-python-magic = "0.4.15"
-Django = "3.0.5"
+python-magic = "0.4.18"
+Django = "3.0.6"
 Pillow = "7.1.2"
 django-compressor = "2.4.0"
 psycopg2-binary = "2.8.5"
 bcrypt = "3.1.7"
-argon2_cffi = "19.2.0"
+argon2_cffi = "20.1.0"
 uWSGI = "2.0.18"
 django-bootstrap4 = "1.1.1"
-firebase-admin = "4.1.0"
-sentry-sdk = "0.14.3"
+firebase-admin = "4.3.0"
+sentry-sdk = "0.14.4"
 django-sendfile2 = "0.5.1"
 
 # docs requirements
 recommonmark = { version = "0.6.0", optional = true }
-sphinx = { version = "2.4.4", optional = true }
-google-api-python-client = "1.8.2"
+sphinx = { version = "3.0.3", optional = true }
+google-api-python-client = "1.8.3"
 
 [tool.poetry.extras]
 docs = ["recommonmark", "sphinx"]
@@ -39,7 +39,7 @@ docs = ["recommonmark", "sphinx"]
 django-template-check = "0.3.1"
 factory_boy = "2.12"
 pydenticon = "0.3.1"
-Faker = "4.0"
+Faker = "4.1.0"
 coverage = {extras = ["toml"], version = "^5.0.3"}
 black = "19.10b0"
 

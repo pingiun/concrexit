@@ -20,16 +20,16 @@ description = "The secure Argon2 password hashing algorithm."
 name = "argon2-cffi"
 optional = false
 python-versions = "*"
-version = "19.2.0"
+version = "20.1.0"
 
 [package.dependencies]
 cffi = ">=1.0.0"
 six = "*"
 
 [package.extras]
-dev = ["coverage", "hypothesis", "pytest", "sphinx", "wheel", "pre-commit"]
+dev = ["coverage (>=5.0.2)", "hypothesis", "pytest", "sphinx", "wheel", "pre-commit"]
 docs = ["sphinx"]
-tests = ["coverage", "hypothesis", "pytest"]
+tests = ["coverage (>=5.0.2)", "hypothesis", "pytest"]
 
 [[package]]
 category = "main"
@@ -123,9 +123,10 @@ description = "An easy safelist-based HTML-sanitizing tool."
 name = "bleach"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "3.1.4"
+version = "3.1.5"
 
 [package.dependencies]
+packaging = "*"
 six = ">=1.9.0"
 webencodings = "*"
 
@@ -230,7 +231,7 @@ description = "A high-level Python Web framework that encourages rapid developme
 name = "django"
 optional = false
 python-versions = ">=3.6"
-version = "3.0.5"
+version = "3.0.6"
 
 [package.dependencies]
 asgiref = ">=3.2,<4.0"
@@ -403,7 +404,7 @@ description = "Faker is a Python package that generates fake data for you."
 name = "faker"
 optional = false
 python-versions = ">=3.4"
-version = "4.0.0"
+version = "4.1.0"
 
 [package.dependencies]
 python-dateutil = ">=2.4"
@@ -415,7 +416,7 @@ description = "Firebase Admin Python SDK"
 name = "firebase-admin"
 optional = false
 python-versions = ">=3.5"
-version = "4.1.0"
+version = "4.3.0"
 
 [package.dependencies]
 cachecontrol = ">=0.12.6"
@@ -467,7 +468,7 @@ description = "Google API Client Library for Python"
 name = "google-api-python-client"
 optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
-version = "1.8.2"
+version = "1.8.3"
 
 [package.dependencies]
 google-api-core = ">=1.13.0,<2dev"
@@ -665,7 +666,7 @@ version = "0.6.2"
 category = "main"
 description = "Core utilities for Python packages"
 name = "packaging"
-optional = true
+optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "20.1"
 
@@ -759,7 +760,7 @@ version = "2.5.2"
 category = "main"
 description = "Python parsing module"
 name = "pyparsing"
-optional = true
+optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "2.4.6"
 
@@ -779,8 +780,8 @@ category = "main"
 description = "File type identification using libmagic"
 name = "python-magic"
 optional = false
-python-versions = "*"
-version = "0.4.15"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "0.4.18"
 
 [[package]]
 category = "main"
@@ -875,7 +876,7 @@ description = "Python client for Sentry (https://getsentry.com)"
 name = "sentry-sdk"
 optional = false
 python-versions = "*"
-version = "0.14.3"
+version = "0.14.4"
 
 [package.dependencies]
 certifi = "*"
@@ -890,7 +891,7 @@ django = ["django (>=1.8)"]
 falcon = ["falcon (>=1.4)"]
 flask = ["flask (>=0.11)", "blinker (>=1.1)"]
 pyspark = ["pyspark (>=2.4.4)"]
-rq = ["0.6"]
+rq = ["rq (>=0.6)"]
 sanic = ["sanic (>=0.8)"]
 sqlalchemy = ["sqlalchemy (>=1.2)"]
 tornado = ["tornado (>=5)"]
@@ -925,13 +926,13 @@ description = "Python documentation generator"
 name = "sphinx"
 optional = true
 python-versions = ">=3.5"
-version = "2.4.4"
+version = "3.0.3"
 
 [package.dependencies]
 Jinja2 = ">=2.3"
 Pygments = ">=2.0"
 alabaster = ">=0.7,<0.8"
-babel = ">=1.3,<2.0 || >2.0"
+babel = ">=1.3"
 colorama = ">=0.3.5"
 docutils = ">=0.12"
 imagesize = "*"
@@ -948,7 +949,8 @@ sphinxcontrib-serializinghtml = "*"
 
 [package.extras]
 docs = ["sphinxcontrib-websupport"]
-test = ["pytest (<5.3.3)", "pytest-cov", "html5lib", "flake8 (>=3.5.0)", "flake8-import-order", "mypy (>=0.761)", "docutils-stubs"]
+lint = ["flake8 (>=3.5.0)", "flake8-import-order", "mypy (>=0.770)", "docutils-stubs"]
+test = ["pytest", "pytest-cov", "html5lib", "typed-ast", "cython"]
 
 [[package]]
 category = "main"
@@ -1089,7 +1091,7 @@ version = "0.5.1"
 docs = ["recommonmark", "sphinx"]
 
 [metadata]
-content-hash = "5d2d4d5915bd629904a45ebd099458b1d02713e6bf4547f122c5d987ae4f9fae"
+content-hash = "b95b83edab870daa8aa358d92d33c55221b5ec9885228ccd5d616a9f2fcee8d9"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1102,24 +1104,22 @@ appdirs = [
     {file = "appdirs-1.4.3.tar.gz", hash = "sha256:9e5896d1372858f8dd3344faf4e5014d21849c756c8d5701f78f8a103b372d92"},
 ]
 argon2-cffi = [
-    {file = "argon2-cffi-19.2.0.tar.gz", hash = "sha256:ffaa623eea77b497ffbdd1a51e941b33d3bf552c60f14dbee274c4070677bda3"},
-    {file = "argon2_cffi-19.2.0-cp27-cp27m-macosx_10_6_intel.whl", hash = "sha256:5335f4caae27c00097bdd17c6a07a0ef32f47364cff3141451229c481f82abc6"},
-    {file = "argon2_cffi-19.2.0-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:73976c0b9d0fc847f967835fce93a9d1c07bf7422f74de2316e25ef6d59ee07e"},
-    {file = "argon2_cffi-19.2.0-cp27-cp27m-win32.whl", hash = "sha256:f2c7f3cd5fe6770fa21ee3d4bb7ba0e1c207e18ead511d912cbf9571c598c345"},
-    {file = "argon2_cffi-19.2.0-cp27-cp27m-win_amd64.whl", hash = "sha256:0abe0ab4f3ba927367812a5c345dc6ae7d58129e0c47732746da8058cccdfd55"},
-    {file = "argon2_cffi-19.2.0-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:27cb7791793a854ca9f9de5cc62e93c1a7812d11d600ef3ca14fe93ae7426799"},
-    {file = "argon2_cffi-19.2.0-cp34-abi3-macosx_10_6_intel.whl", hash = "sha256:00e94a65d46c3f6f2ffab769e860efc21f77e55bd8fcdfde422bd07c632b3fcc"},
-    {file = "argon2_cffi-19.2.0-cp34-abi3-manylinux1_x86_64.whl", hash = "sha256:49ec16a14e8182ed63daa5d7a13d12da6bfc46eebaac4b238c8d15533b621cf0"},
-    {file = "argon2_cffi-19.2.0-cp34-cp34m-win32.whl", hash = "sha256:748b565d4006a7e9f2b71f9d6ff660b4e150cc38faa29ca1b64b58e238c013b0"},
-    {file = "argon2_cffi-19.2.0-cp34-cp34m-win_amd64.whl", hash = "sha256:0920cfe813cd82e85c4fa84c8a01801a7cb376a8ed8267a1608e70a886953ac7"},
-    {file = "argon2_cffi-19.2.0-cp35-cp35m-win32.whl", hash = "sha256:f79045e7673d72ed0f33d78a5e104702f989eb1a0e0eb0ab5534cebc9cdb9142"},
-    {file = "argon2_cffi-19.2.0-cp35-cp35m-win_amd64.whl", hash = "sha256:e09d644829887c956478db83c47d1ad26f167b8f08e2ccebc6b78e59aeca60b5"},
-    {file = "argon2_cffi-19.2.0-cp36-cp36m-win32.whl", hash = "sha256:246860c7955aa614518a19277b06dda34902c54535aefd9220d07c774391890e"},
-    {file = "argon2_cffi-19.2.0-cp36-cp36m-win_amd64.whl", hash = "sha256:13082f670904dcb7f4ef39216139ace2d981f9050a8f3766e566f845e8c634fc"},
-    {file = "argon2_cffi-19.2.0-cp37-cp37m-win32.whl", hash = "sha256:184fee11f483b9168a32afaea8064abe464c1bb090d320f64f3609f1bbbdb691"},
-    {file = "argon2_cffi-19.2.0-cp37-cp37m-win_amd64.whl", hash = "sha256:e27488da690afac92e87cb61ba9cf9a22bff790413f55655ad017456cd58f22c"},
-    {file = "argon2_cffi-19.2.0-cp38-cp38-win32.whl", hash = "sha256:72fae6bf37c25fdb9b4d30c2b9d658a72ac775249dd132ab3ac03adde619dc14"},
-    {file = "argon2_cffi-19.2.0-cp38-cp38-win_amd64.whl", hash = "sha256:61d2b16c08ce5c24f91d2d2917c2300a90bb78672060876a335e1014727ced57"},
+    {file = "argon2-cffi-20.1.0.tar.gz", hash = "sha256:d8029b2d3e4b4cea770e9e5a0104dd8fa185c1724a0f01528ae4826a6d25f97d"},
+    {file = "argon2_cffi-20.1.0-cp27-cp27m-macosx_10_6_intel.whl", hash = "sha256:6ea92c980586931a816d61e4faf6c192b4abce89aa767ff6581e6ddc985ed003"},
+    {file = "argon2_cffi-20.1.0-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:05a8ac07c7026542377e38389638a8a1e9b78f1cd8439cd7493b39f08dd75fbf"},
+    {file = "argon2_cffi-20.1.0-cp27-cp27m-win32.whl", hash = "sha256:0bf066bc049332489bb2d75f69216416329d9dc65deee127152caeb16e5ce7d5"},
+    {file = "argon2_cffi-20.1.0-cp27-cp27m-win_amd64.whl", hash = "sha256:57358570592c46c420300ec94f2ff3b32cbccd10d38bdc12dc6979c4a8484fbc"},
+    {file = "argon2_cffi-20.1.0-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:7d455c802727710e9dfa69b74ccaab04568386ca17b0ad36350b622cd34606fe"},
+    {file = "argon2_cffi-20.1.0-cp35-abi3-manylinux1_x86_64.whl", hash = "sha256:b160416adc0f012fb1f12588a5e6954889510f82f698e23ed4f4fa57f12a0647"},
+    {file = "argon2_cffi-20.1.0-cp35-cp35m-win32.whl", hash = "sha256:9bee3212ba4f560af397b6d7146848c32a800652301843df06b9e8f68f0f7361"},
+    {file = "argon2_cffi-20.1.0-cp35-cp35m-win_amd64.whl", hash = "sha256:392c3c2ef91d12da510cfb6f9bae52512a4552573a9e27600bdb800e05905d2b"},
+    {file = "argon2_cffi-20.1.0-cp36-cp36m-win32.whl", hash = "sha256:ba7209b608945b889457f949cc04c8e762bed4fe3fec88ae9a6b7765ae82e496"},
+    {file = "argon2_cffi-20.1.0-cp36-cp36m-win_amd64.whl", hash = "sha256:da7f0445b71db6d3a72462e04f36544b0de871289b0bc8a7cc87c0f5ec7079fa"},
+    {file = "argon2_cffi-20.1.0-cp37-abi3-macosx_10_6_intel.whl", hash = "sha256:cc0e028b209a5483b6846053d5fd7165f460a1f14774d79e632e75e7ae64b82b"},
+    {file = "argon2_cffi-20.1.0-cp37-cp37m-win32.whl", hash = "sha256:18dee20e25e4be86680b178b35ccfc5d495ebd5792cd00781548d50880fee5c5"},
+    {file = "argon2_cffi-20.1.0-cp37-cp37m-win_amd64.whl", hash = "sha256:6678bb047373f52bcff02db8afab0d2a77d83bde61cfecea7c5c62e2335cb203"},
+    {file = "argon2_cffi-20.1.0-cp38-cp38-win32.whl", hash = "sha256:77e909cc756ef81d6abb60524d259d959bab384832f0c651ed7dcb6e5ccdbb78"},
+    {file = "argon2_cffi-20.1.0-cp38-cp38-win_amd64.whl", hash = "sha256:9dfd5197852530294ecb5795c97a823839258dfd5eb9420233c7cfedec2058f2"},
 ]
 asgiref = [
     {file = "asgiref-3.2.3-py2.py3-none-any.whl", hash = "sha256:ea448f92fc35a0ef4b1508f53a04c4670255a3f33d22a81c8fc9c872036adbe5"},
@@ -1163,8 +1163,8 @@ black = [
     {file = "black-19.10b0.tar.gz", hash = "sha256:c2edb73a08e9e0e6f65a0e6af18b059b8b1cdd5bef997d7a0b181df93dc81539"},
 ]
 bleach = [
-    {file = "bleach-3.1.4-py2.py3-none-any.whl", hash = "sha256:cc8da25076a1fe56c3ac63671e2194458e0c4d9c7becfd52ca251650d517903c"},
-    {file = "bleach-3.1.4.tar.gz", hash = "sha256:e78e426105ac07026ba098f04de8abe9b6e3e98b5befbf89b51a5ef0a4292b03"},
+    {file = "bleach-3.1.5-py2.py3-none-any.whl", hash = "sha256:2bce3d8fab545a6528c8fa5d9f9ae8ebc85a56da365c7f85180bfe96a35ef22f"},
+    {file = "bleach-3.1.5.tar.gz", hash = "sha256:3c4c520fdb9db59ef139915a5db79f8b51bc2a7257ea0389f30c846883430a4b"},
 ]
 cachecontrol = [
     {file = "CacheControl-0.12.6-py2.py3-none-any.whl", hash = "sha256:10d056fa27f8563a271b345207402a6dcce8efab7e5b377e270329c62471b10d"},
@@ -1263,8 +1263,8 @@ coverage = [
     {file = "coverage-5.0.3.tar.gz", hash = "sha256:77afca04240c40450c331fa796b3eab6f1e15c5ecf8bf2b8bee9706cd5452fef"},
 ]
 django = [
-    {file = "Django-3.0.5-py3-none-any.whl", hash = "sha256:642d8eceab321ca743ae71e0f985ff8fdca59f07aab3a9fb362c617d23e33a76"},
-    {file = "Django-3.0.5.tar.gz", hash = "sha256:d4666c2edefa38c5ede0ec1655424c56dc47ceb04b6d8d62a7eac09db89545c1"},
+    {file = "Django-3.0.6-py3-none-any.whl", hash = "sha256:051ba55d42daa3eeda3944a8e4df2bc96d4c62f94316dea217248a22563c3621"},
+    {file = "Django-3.0.6.tar.gz", hash = "sha256:9aaa6a09678e1b8f0d98a948c56482eac3e3dd2ddbfb8de70a868135ef3b5e01"},
 ]
 django-appconf = [
     {file = "django-appconf-1.0.3.tar.gz", hash = "sha256:35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3"},
@@ -1315,12 +1315,12 @@ factory-boy = [
     {file = "factory_boy-2.12.0.tar.gz", hash = "sha256:faf48d608a1735f0d0a3c9cbf536d64f9132b547dae7ba452c4d99a79e84a370"},
 ]
 faker = [
-    {file = "Faker-4.0.0-py3-none-any.whl", hash = "sha256:047d4d1791bfb3756264da670d99df13d799bb36e7d88774b1585a82d05dbaec"},
-    {file = "Faker-4.0.0.tar.gz", hash = "sha256:1b1a58961683b30c574520d0c739c4443e0ef6a185c04382e8cc888273dbebed"},
+    {file = "Faker-4.1.0-py3-none-any.whl", hash = "sha256:34ae397aef03a0a17910452f1e8430d57fa59e2d67b20e9b637218e8f7dd22b3"},
+    {file = "Faker-4.1.0.tar.gz", hash = "sha256:103c46b9701a151299c5bffe6fefcd4fb5fb04c3b5d06bee4952d36255d44ea2"},
 ]
 firebase-admin = [
-    {file = "firebase_admin-4.1.0-py3-none-any.whl", hash = "sha256:0ce190793a4fc73a73dc6301cab98c9abdd8c045ada490310beea7eba92a6c53"},
-    {file = "firebase_admin-4.1.0.tar.gz", hash = "sha256:86f753b69e2534bdc925c49e64ba97704a9cdf201374a480c883f4a69c7f46a6"},
+    {file = "firebase_admin-4.3.0-py3-none-any.whl", hash = "sha256:7cf4ce710fa06e69308b58e7d55d5f2aebff559f07272578186c5ef3c3461730"},
+    {file = "firebase_admin-4.3.0.tar.gz", hash = "sha256:23deaede741f6c4785939c1b7e1385561431887d8b065202f27372d8ea73cf01"},
 ]
 freezegun = [
     {file = "freezegun-0.3.15-py2.py3-none-any.whl", hash = "sha256:82c757a05b7c7ca3e176bfebd7d6779fd9139c7cb4ef969c38a28d74deef89b2"},
@@ -1331,8 +1331,8 @@ google-api-core = [
     {file = "google_api_core-1.16.0-py2.py3-none-any.whl", hash = "sha256:859f7392676761f2b160c6ee030c3422135ada4458f0948c5690a6a7c8d86294"},
 ]
 google-api-python-client = [
-    {file = "google-api-python-client-1.8.2.tar.gz", hash = "sha256:bf482c13fb41a6d01770f9d62be6b33fdcd41d68c97f2beb9be02297bdd9e725"},
-    {file = "google_api_python_client-1.8.2-py3-none-any.whl", hash = "sha256:8dd35a3704650c2db44e6cf52abdaf9de71f409c93c56bbe48a321ab5e14ebad"},
+    {file = "google-api-python-client-1.8.3.tar.gz", hash = "sha256:be4e8dcf399d7d1dcaae004b7f18694907f740bf6e6cebda91da8ebd968c5481"},
+    {file = "google_api_python_client-1.8.3-py3-none-any.whl", hash = "sha256:b764be88cf2a1f8b4c4d17c9187a279fea93f4d767e7d7c24f71bf25385a8b10"},
 ]
 google-auth = [
     {file = "google-auth-1.11.0.tar.gz", hash = "sha256:44549e69ac39acf41fdf47f3f39a06e4e68378476806760d94a2c6a361b2bb06"},
@@ -1597,8 +1597,8 @@ python-dateutil = [
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
 ]
 python-magic = [
-    {file = "python-magic-0.4.15.tar.gz", hash = "sha256:f3765c0f582d2dfc72c15f3b5a82aecfae9498bd29ca840d72f37d7bd38bfcd5"},
-    {file = "python_magic-0.4.15-py2.py3-none-any.whl", hash = "sha256:f2674dcfad52ae6c49d4803fa027809540b130db1dec928cfbb9240316831375"},
+    {file = "python-magic-0.4.18.tar.gz", hash = "sha256:b757db2a5289ea3f1ced9e60f072965243ea43a2221430048fd8cacab17be0ce"},
+    {file = "python_magic-0.4.18-py2.py3-none-any.whl", hash = "sha256:356efa93c8899047d1eb7d3eb91e871ba2f5b1376edbaf4cc305e3c872207355"},
 ]
 python-stdnum = [
     {file = "python-stdnum-1.13.tar.gz", hash = "sha256:120f83d33fb8b8be1b282f20dd755a892d5facf84f54fa21f75bbd2633128160"},
@@ -1662,8 +1662,8 @@ rsa = [
     {file = "rsa-4.0.tar.gz", hash = "sha256:1a836406405730121ae9823e19c6e806c62bbad73f890574fff50efa4122c487"},
 ]
 sentry-sdk = [
-    {file = "sentry-sdk-0.14.3.tar.gz", hash = "sha256:bb90a4e19c7233a580715fc986cc44be2c48fc10b31e71580a2037e1c94b6950"},
-    {file = "sentry_sdk-0.14.3-py2.py3-none-any.whl", hash = "sha256:23808d571d2461a4ce3784ec12bbee5bdb8c026c143fe79d36cef8a6d653e71f"},
+    {file = "sentry-sdk-0.14.4.tar.gz", hash = "sha256:0e5e947d0f7a969314aa23669a94a9712be5a688ff069ff7b9fc36c66adc160c"},
+    {file = "sentry_sdk-0.14.4-py2.py3-none-any.whl", hash = "sha256:799a8bf76b012e3030a881be00e97bc0b922ce35dde699c6537122b751d80e2c"},
 ]
 six = [
     {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},
@@ -1678,8 +1678,8 @@ soupsieve = [
     {file = "soupsieve-1.9.5.tar.gz", hash = "sha256:e2c1c5dee4a1c36bcb790e0fabd5492d874b8ebd4617622c4f6a731701060dda"},
 ]
 sphinx = [
-    {file = "Sphinx-2.4.4-py3-none-any.whl", hash = "sha256:fc312670b56cb54920d6cc2ced455a22a547910de10b3142276495ced49231cb"},
-    {file = "Sphinx-2.4.4.tar.gz", hash = "sha256:b4c750d546ab6d7e05bdff6ac24db8ae3e8b8253a3569b754e445110a0a12b66"},
+    {file = "Sphinx-3.0.3-py3-none-any.whl", hash = "sha256:f5505d74cf9592f3b997380f9bdb2d2d0320ed74dd69691e3ee0644b956b8d83"},
+    {file = "Sphinx-3.0.3.tar.gz", hash = "sha256:62edfd92d955b868d6c124c0942eba966d54b5f3dcb4ded39e65f74abac3f572"},
 ]
 sphinxcontrib-applehelp = [
     {file = "sphinxcontrib-applehelp-1.0.1.tar.gz", hash = "sha256:edaa0ab2b2bc74403149cb0209d6775c96de797dfd5b5e2a71981309efab3897"},
