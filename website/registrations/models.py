@@ -98,6 +98,18 @@ class Entry(models.Model):
         "members.Membership", on_delete=models.SET_NULL, blank=True, null=True,
     )
 
+    @property
+    def payment_amount(self):
+        return self.contribution
+
+    @property
+    def payment_topic(self):
+        return f"Membership registration {self.membership_type} ({self.length})"
+
+    @property
+    def payment_notes(self):
+        return f"Created at {self.created_at}. Confirmed at {self.updated_at}."
+
     def save(
         self, force_insert=False, force_update=False, using=None, update_fields=None
     ):
@@ -139,22 +151,6 @@ class Entry(models.Model):
 
 class Registration(Entry, Payable):
     """Describes a new registration for the association"""
-
-    @property
-    def payment_amount(self):
-        return self.contribution
-
-    @property
-    def payment_topic(self):
-        return f"Membership registration {self.membership_type} ({self.length})"
-
-    @property
-    def payment_notes(self):
-        return f"Created at {self.created_at}. Confirmed at {self.updated_at}."
-
-    @property
-    def payment_payer(self):
-        pass  # TODO
 
     # ---- Personal information -----
 
@@ -272,6 +268,10 @@ class Registration(Entry, Payable):
         verbose_name=_("birthday calendar opt-in"), default=False
     )
 
+    @property
+    def payment_payer(self):
+        raise NotImplementedError # TODO
+
     def get_full_name(self):
         full_name = "{} {}".format(self.first_name, self.last_name)
         return full_name.strip()
@@ -345,11 +345,6 @@ class Registration(Entry, Payable):
 class Renewal(Entry):
     """Describes a renewal for the association membership"""
 
-    @property
-    def payment_topic(self):
-        return f"Membership renewal {self.membership_type} ({self.length})"
-
-
     member = models.ForeignKey(
         "members.Member",
         on_delete=models.CASCADE,
@@ -357,6 +352,10 @@ class Renewal(Entry):
         blank=False,
         null=False,
     )
+
+    @property
+    def payment_payer(self):
+        return self.member
 
     def save(
         self, force_insert=False, force_update=False, using=None, update_fields=None
@@ -375,7 +374,7 @@ class Renewal(Entry):
             .exists()
         ):
             raise ValidationError(
-                _("You already have a renewal " "request queued for review.")
+                _("You already have a renewal request queued for review.")
             )
 
         # Invalid form for study and honorary members
@@ -384,7 +383,7 @@ class Renewal(Entry):
             errors.update(
                 {
                     "length": _("You currently have an active membership."),
-                    "membership_type": _("You currently have" " an active membership."),
+                    "membership_type": _("You currently have an active membership."),
                 }
             )
 
