@@ -249,8 +249,7 @@ class PaymentAdmin(admin.ModelAdmin):
         """Add selected TPAY payments to a new batch"""
         tpays = queryset.filter(type=Payment.TPAY)
         if len(tpays) > 0:
-            batch = Batch()
-            batch.save()
+            batch = Batch.objects.create()
             tpays.update(batch=batch)
         _show_message(
             self,
