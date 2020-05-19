@@ -72,9 +72,9 @@ class BatchProcessAdminView(View):
             batch.processed = True
             payments = batch.payments_set.select_related("paid_by")
             for payment in payments:
-                ba = payment.paid_by.bank_accounts.last()
-                ba.last_used = timezone.now()
-                ba.save()
+                bank_account = payment.paid_by.bank_accounts.last()
+                bank_account.last_used = timezone.now()
+                bank_account.save()
 
             batch.save()
             messages.success(
