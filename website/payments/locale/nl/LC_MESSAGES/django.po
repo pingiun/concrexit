@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-22 10:33+0100\n"
-"PO-Revision-Date: 2020-03-22 10:36+0100\n"
+"POT-Creation-Date: 2020-05-19 12:24+0200\n"
+"PO-Revision-Date: 2020-05-19 12:25+0200\n"
 "Last-Translator: Job Doesburg <job.doesburg@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -48,8 +48,8 @@ msgid "Process selected payments (wire)"
 msgstr "Verwerk geselecteerde betalingen (overboeking)"
 
 #: admin.py
-msgid "Add selected TPAY payments to a new batch"
-msgstr "Voeg geselecteerde TPAY betalingen aan een nieuwe batch toe"
+msgid "Add selected Thalia Pay payments to a new batch"
+msgstr "Voeg geselecteerde Thalia Pay betalingen aan een nieuwe batch toe"
 
 #: admin.py tests/test_admin.py
 #, python-format

@@ -260,7 +260,7 @@ class PaymentAdmin(admin.ModelAdmin):
             f"No payments using Thalia Pay are selected, " f"no batch is created",
         )
 
-    add_to_new_batch.short_descriptionn = _("Add selected TPAY payments to a new batch")
+    add_to_new_batch.short_descriptionn = _("Add selected Thalia Pay payments to a new batch")
 
     def add_to_last_batch(self, request: HttpRequest, queryset: QuerySet) -> None:
         """Add selected TPAY payments to the last batch"""
@@ -290,7 +290,7 @@ class PaymentAdmin(admin.ModelAdmin):
                 messages.ERROR,
             )
 
-    add_to_new_batch.short_descriptionn = _("Add selected TPAY payments to a new batch")
+    add_to_new_batch.short_descriptionn = _("Add selected Thalia Pay payments to a new batch")
 
     def _process_feedback(self, request, updated_payments: list) -> None:
         """Show a feedback message for the processing result"""
