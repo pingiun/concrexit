@@ -4,6 +4,14 @@ import django.core.validators
 from django.db import migrations, models
 
 
+def set_contribution_fields(apps, schema_editor):
+    """On this migration, set the empty contribution fields to the paid contribution."""
+    Entry = apps.get_model('registrations', 'Entry')
+    for entry in Entry.objects.all():
+        if entry.payment and not entry.contribution:
+            entry.contribution = entry.payment.amount
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -16,4 +24,5 @@ class Migration(migrations.Migration):
             name='contribution',
             field=models.FloatField(validators=[django.core.validators.MinValueValidator(7.5)], verbose_name='contribution'),
         ),
-    ]  # TODO all existing NULL contribution fields must be set to the amount of the related payment
+        migrations.RunPython(set_contribution_fields)
+    ]
