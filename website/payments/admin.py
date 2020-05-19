@@ -504,13 +504,10 @@ class BatchAdmin(admin.ModelAdmin):
         """
         extra_context = extra_context or {}
         obj = None
-        processed = False
         if object_id is not None and request.user.has_perm("payments.process_batches"):
             obj = Batch.objects.get(id=object_id)
-            processed = obj.processed
 
         extra_context["batch"] = obj
-        extra_context["processed"] = processed
         return super().changeform_view(request, object_id, form_url, extra_context)
 
 

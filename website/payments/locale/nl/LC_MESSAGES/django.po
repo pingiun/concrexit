@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 13:29+0200\n"
-"PO-Revision-Date: 2020-05-19 13:32+0200\n"
+"POT-Creation-Date: 2020-05-19 17:27+0200\n"
+"PO-Revision-Date: 2020-05-19 17:28+0200\n"
 "Last-Translator: Job Doesburg <job.doesburg@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -271,6 +271,11 @@ msgstr "Overboeking"
 #: models.py templates/payments/payment_list.html
 msgid "processing date"
 msgstr "verwerkingsdatum"
+
+#: models.py
+msgid "Non Thalia Pay payments cannot be added to a batch."
+msgstr ""
+"Niet Thalia Pay betalingen kunnen niet worden toegevoegd aan een batch."
 
 #: models.py
 msgid "payment"
