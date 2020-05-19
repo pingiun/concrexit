@@ -104,12 +104,12 @@ class BatchExportAdminView(View):
         response["Content-Disposition"] = 'attachment;filename="batch.csv"'
         writer = csv.writer(response)
         headers = [
-            _("Account holder name"),
+            _("Account holder"),
             _("IBAN"),
-            _("Mandate id"),
+            _("Mandate Reference"),
             _("Amount"),
             _("Description"),
-            _("Mandate date"),
+            _("Mandate Date"),
         ]
         writer.writerow([capfirst(x) for x in headers])
 
