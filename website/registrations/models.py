@@ -98,6 +98,10 @@ class Entry(models.Model, Payable):
         "members.Membership", on_delete=models.SET_NULL, blank=True, null=True,
     )
 
+    mandate = models.ForeignKey(
+        "payments.BankAccount", on_delete=models.SET_NULL, blank=True, null=True,
+    )
+
     @property
     def payment_amount(self):
         return self.contribution
@@ -110,11 +114,11 @@ class Entry(models.Model, Payable):
 
     @property
     def payment_notes(self):
-        return f"Created at {self.created_at}. Confirmed at {self.updated_at}."
+        return f"{self.payment_topic}. Creation date: {self.created_at}. Confirmation date: {self.updated_at}"
 
     @property
     def payment_topic(self):
-        return f"Membership registration {self.membership_type} ({self.length})"
+        pass
 
     def save(
         self, force_insert=False, force_update=False, using=None, update_fields=None
@@ -274,6 +278,10 @@ class Registration(Entry):
         verbose_name=_("birthday calendar opt-in"), default=False
     )
 
+    @property
+    def payment_topic(self):
+        return f"Membership registration {self.membership_type} ({self.length})"
+
     def get_full_name(self):
         full_name = "{} {}".format(self.first_name, self.last_name)
         return full_name.strip()
@@ -358,6 +366,10 @@ class Renewal(Entry):
     @property
     def payment_payer(self):
         return self.member
+
+    @property
+    def payment_topic(self):
+        return f"Membership renewal '{self.membership_type}' ({self.length})"
 
     def save(
         self, force_insert=False, force_update=False, using=None, update_fields=None

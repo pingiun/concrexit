@@ -33,9 +33,7 @@ def send_registration_email_confirmation(registration: Registration) -> None:
         )
 
 
-def send_registration_accepted_message(
-    registration: Registration
-) -> None:
+def send_registration_accepted_message(registration: Registration) -> None:
     """
     Send the registration acceptance email
 

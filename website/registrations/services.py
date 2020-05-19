@@ -229,9 +229,7 @@ def _create_member_from_registration(registration: Registration) -> Member:
 
     # Make sure the username and email are unique
     if not check_unique_user(registration):
-        raise ValueError(
-            "Username or email address of the registration " "are not unique"
-        )
+        raise ValueError("Username or email address of the registration are not unique")
 
     # Create user
     user = get_user_model().objects.create_user(
@@ -306,7 +304,7 @@ def _create_membership_from_entry(
             if membership is not None:
                 if membership.until is None:
                     raise ValueError(
-                        "This member already has a never ending " "membership"
+                        "This member already has a never ending membership"
                     )
                 since = membership.until
         except Renewal.DoesNotExist:
@@ -326,7 +324,7 @@ def _create_membership_from_entry(
             if membership is not None:
                 if membership.until is None:
                     raise ValueError(
-                        "This member already has a never ending " "membership"
+                        "This member already has a never ending membership"
                     )
                 if entry.created_at.date() < membership.until:
                     membership.until = None
@@ -342,53 +340,68 @@ def _create_membership_from_entry(
     )
 
 
-def process_payment(payment: Payment) -> None:
+def _create_new_membership(entry: Entry, member: Member):
     """
-    Process the payment for the entry and send the right emails
+    Create a new membership for an entry.
 
-    :param payment: The payment that should be processed
-    :type payment: Payment
+    :param entry: The entry that is processed
+    :type entry: Entry
+    :param member: The member for which the Membership must be created
+    :type member: ember
     """
-
-    if not payment:
-        return
-
-    print(payment.id)
-
-    try:
-        entry = payment.registrations_entry
-    except Entry.DoesNotExist:
-        return
 
     if entry.status != Entry.STATUS_ACCEPTED:
+        raise AssertionError("Cannot create a new membership for an unaccepted entry.")
+
+    membership = _create_membership_from_entry(entry, member)
+    entry.membership = membership
+    entry.status = Entry.STATUS_COMPLETED
+    entry.save()
+
+
+def process_registration(registration: Registration) -> None:
+    """
+    Once an entry is saved, process the entry if it is paid
+
+    :param registration: The entry that should be processed
+    :type registration: Registration
+    """
+
+    if not registration or not registration.payment:
         return
 
-    member = None
+    if registration.status != Entry.STATUS_ACCEPTED:
+        return
 
-    try:
-        registration = entry.registration
-        # Create user and member
-        member = _create_member_from_registration(registration)
-        payment.paid_by = member
-        payment.save()
-    except Registration.DoesNotExist:
-        try:
-            # Get member from renewal
-            renewal = entry.renewal
-            member = renewal.member
-            # Send email of payment confirmation for renewal,
-            # not needed for registration since a new member already
-            # gets the welcome email
-            emails.send_renewal_complete_message(entry.renewal)
-        except Renewal.DoesNotExist:
-            pass
+    member = _create_member_from_registration(registration)
+    registration.payment.paid_by = member
+    registration.payment.save()
+
+    if registration.mandate:
+        registration.mandate.owner = member
+        registration.mandate.save()
 
     # If member was retrieved, then create a new membership
-    if member is not None:
-        membership = _create_membership_from_entry(entry, member)
-        entry.membership = membership
-        entry.status = Entry.STATUS_COMPLETED
-        entry.save()
+    if member:
+        _create_new_membership(registration, member)
+
+
+def process_renewal(renewal: Renewal) -> None:
+    """
+    Once an entry is saved, process the entry if it is paid
+
+    :param renewal: The entry that should be processed
+    :type renewal: Renewal
+    """
+
+    if not renewal or not renewal.payment:
+        return
+
+    if renewal.status != Entry.STATUS_ACCEPTED:
+        return
+
+    _create_new_membership(renewal, renewal.member)
+    emails.send_renewal_complete_message(renewal)
 
 
 def execute_data_minimisation(dry_run=False):
