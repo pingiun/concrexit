@@ -484,9 +484,7 @@ class BatchAdmin(admin.ModelAdmin):
         instances = formset.save(commit=False)
 
         for instance in instances:
-            if instance.batch is None or (
-                instance.batch and not instance.batch.processed
-            ):
+            if instance.batch and not instance.batch.processed:
                 instance.batch = None
             instance.save()
         formset.save_m2m()
