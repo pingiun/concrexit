@@ -117,7 +117,7 @@ class PaymentAdmin(admin.ModelAdmin):
                 "<a href='{}'>{}</a>", batch.get_absolute_url(), str(batch)
             )
         elif payment.type == Payment.TPAY:
-            return "No batch attached"
+            return _("No batch attached")
         else:
             return ""
 
@@ -137,7 +137,7 @@ class PaymentAdmin(admin.ModelAdmin):
         if payment.batch and payment.batch.processed:
             messages.error(
                 request,
-                "You cannot delete a payment that is attached to a processed batch.",
+                _("You cannot delete a payment that is attached to a processed batch."),
             )
         else:
             super().delete_model(request, payment)
@@ -256,8 +256,8 @@ class PaymentAdmin(admin.ModelAdmin):
             self,
             request,
             len(tpays),
-            f"Successfully added {len(tpays)} payments to new batch",
-            f"No payments using Thalia Pay are selected, " f"no batch is created",
+            _("Successfully added {} payments to new batch").format(len(tpays)),
+            _("No payments using Thalia Pay are selected, no batch is created"),
         )
 
     add_to_new_batch.short_descriptionn = _(
@@ -270,25 +270,28 @@ class PaymentAdmin(admin.ModelAdmin):
         if len(tpays) > 0:
             batch = Batch.objects.last()
             if not batch:
-                self.message_user(request, "No batches available.", messages.ERROR)
+                self.message_user(request, _("No batches available."), messages.ERROR)
             elif not batch.processed:
                 batch.save()
                 tpays.update(batch=batch)
                 self.message_user(
                     request,
-                    f"Successfully added {len(tpays)} payments to {batch}",
+                    _("Successfully added {} payments to {}").format(len(tpays), batch),
                     messages.SUCCESS,
                 )
             else:
                 self.message_user(
                     request,
-                    f"The last batch {batch} is already processed",
+                    _("The last batch {} is already processed").format(batch),
                     messages.ERROR,
                 )
         else:
             self.message_user(
                 request,
-                f"No payments using Thalia Pay are selected, " f"no batch is created",
+                _(
+                    f"No payments using Thalia Pay are selected, "
+                    f"no batch is created"
+                ),
                 messages.ERROR,
             )
 
@@ -443,7 +446,7 @@ class BatchAdmin(admin.ModelAdmin):
 
     def delete_model(self, request, batch):
         if batch.processed:
-            messages.error(request, "You cannot delete a processed batch.")
+            messages.error(request, _("You cannot delete a processed batch."))
         else:
             super().delete_model(request, batch)
 

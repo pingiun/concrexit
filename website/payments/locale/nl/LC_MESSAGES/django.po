@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 12:24+0200\n"
-"PO-Revision-Date: 2020-05-19 12:25+0200\n"
+"POT-Creation-Date: 2020-05-19 13:29+0200\n"
+"PO-Revision-Date: 2020-05-19 13:32+0200\n"
 "Last-Translator: Job Doesburg <job.doesburg@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -23,12 +23,20 @@ msgid "paid by"
 msgstr "betaald door"
 
 #: admin.py
+msgid "No batch attached"
+msgstr "Niet in batch"
+
+#: admin.py
 msgid "in batch"
 msgstr "in batch"
 
 #: admin.py
 msgid "processed by"
 msgstr "verwerkt door"
+
+#: admin.py
+msgid "You cannot delete a payment that is attached to a processed batch."
+msgstr "Je kan geen betaling verwijderen dit in een verwerkte batch zit."
 
 #: admin.py
 msgid "Process selected payments (cash)"
@@ -48,8 +56,33 @@ msgid "Process selected payments (wire)"
 msgstr "Verwerk geselecteerde betalingen (overboeking)"
 
 #: admin.py
+msgid "Successfully added {} payments to new batch"
+msgstr "{} betalingen zijn succesvol toegevoegd aan een nieuwe batch"
+
+#: admin.py
+msgid "No payments using Thalia Pay are selected, no batch is created"
+msgstr ""
+"Geen betalingen via Thalia Pay zijn geselecteerd, dus geen batch is gemaakt"
+
+#: admin.py
 msgid "Add selected Thalia Pay payments to a new batch"
 msgstr "Voeg geselecteerde Thalia Pay betalingen aan een nieuwe batch toe"
+
+#: admin.py
+msgid "No batches available."
+msgstr "Geen batches beschikbaar."
+
+#: admin.py
+msgid "Successfully added {} payments to {}"
+msgstr "{} betalingen zijn succesvol toegevoegd aan {}"
+
+#: admin.py
+msgid "The last batch {} is already processed"
+msgstr "De laatste batch {} is al verwerkt"
+
+#: admin.py
+msgid "No payments using Thalia Pay are selected, "
+msgstr "Geen betaling die gebruik maken van Thalia Pay zijn geselecteerd, "
 
 #: admin.py tests/test_admin.py
 #, python-format
@@ -111,6 +144,10 @@ msgstr "Ongeldig"
 #: admin.py
 msgid "None"
 msgstr "Geen"
+
+#: admin.py
+msgid "You cannot delete a processed batch."
+msgstr "You kan geen verwerkte batch verwijderen."
 
 #: admin.py models.py
 msgid "owner"
@@ -257,8 +294,8 @@ msgid "processing status"
 msgstr "verwerkingsstatus"
 
 #: models.py
-msgid "description of batch"
-msgstr "beschrijving van batch"
+msgid "description"
+msgstr "beschrijving"
 
 #: models.py
 msgid "first payment in batch"

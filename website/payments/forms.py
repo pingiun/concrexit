@@ -54,6 +54,15 @@ class BatchPaymentInlineAdminForm(forms.ModelForm):
         required=False, label=_("Remove payment from batch")
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        instance = kwargs.get("instance")
+        if instance and instance.batch.processed:
+            # Hide the remove batch field when the batch is processed
+            self.fields["remove_batch"].widget = self.fields[
+                "remove_batch"
+            ].hidden_widget()
+
     class Meta:
         fields = (
             "topic",
