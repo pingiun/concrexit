@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 17:27+0200\n"
-"PO-Revision-Date: 2020-05-19 17:28+0200\n"
+"POT-Creation-Date: 2020-05-19 17:37+0200\n"
+"PO-Revision-Date: 2020-05-19 17:38+0200\n"
 "Last-Translator: Job Doesburg <job.doesburg@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -213,12 +213,12 @@ msgid "Successfully processed {}."
 msgstr "{} is succesvol verwerkt."
 
 #: admin_views.py
-msgid "Account holder name"
+msgid "Account holder"
 msgstr "Rekeninghouder"
 
 #: admin_views.py
-msgid "Mandate id"
-msgstr "Mandatennummer"
+msgid "Mandate Reference"
+msgstr "Kenmerk machtiging"
 
 #: admin_views.py
 msgid "Amount"
@@ -229,7 +229,7 @@ msgid "Description"
 msgstr "Beschrijving"
 
 #: admin_views.py
-msgid "Mandate date"
+msgid "Mandate Date"
 msgstr "Mandaat datum"
 
 #: apps.py
