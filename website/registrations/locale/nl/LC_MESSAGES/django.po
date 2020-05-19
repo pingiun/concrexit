@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-29 23:36+0200\n"
+"POT-Creation-Date: 2020-05-19 22:37+0200\n"
 "PO-Revision-Date: 2020-03-29 23:37+0200\n"
 "Last-Translator: Thom Wiggers <thom@thomwiggers.nl>\n"
 "Language-Team: \n"
@@ -37,14 +37,6 @@ msgstr "Unversiteitsinformatie"
 #: admin.py
 msgid "references"
 msgstr "referenties"
-
-#: admin.py tests/test_admin.py
-msgid "Processed"
-msgstr "Verwerkt"
-
-#: admin.py tests/test_admin.py
-msgid "Unprocessed"
-msgstr "Onverwerkt"
 
 #: admin.py tests/test_admin.py
 #, python-format
@@ -1016,6 +1008,14 @@ msgstr "gelukt"
 #: templates/registrations/renewal_success.html
 msgid "Thank you! We'll review your submission as soon as possible."
 msgstr "Bedankt! We beoordelen je verzoek zo snel mogelijk."
+
+#: tests/test_admin.py
+msgid "Unprocessed"
+msgstr "Onverwerkt"
+
+#: tests/test_admin.py
+msgid "Processed"
+msgstr "Verwerkt"
 
 #: tests/test_views.py views.py
 #, python-format

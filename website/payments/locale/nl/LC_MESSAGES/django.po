@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-10 20:41+0200\n"
-"PO-Revision-Date: 2020-05-10 20:41+0200\n"
+"POT-Creation-Date: 2020-05-19 22:42+0200\n"
+"PO-Revision-Date: 2020-05-19 22:46+0200\n"
 "Last-Translator: Job Doesburg <job.doesburg@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: admin.py models.py
 msgid "paid by"
@@ -25,23 +25,6 @@ msgstr "betaald door"
 #: admin.py models.py
 msgid "processed by"
 msgstr "verwerkt door"
-
-#: admin.py
-msgid "Process selected payments (cash)"
-msgstr "Verwerk geselecteerde betalingen (contant)"
-
-#: admin.py
-msgid "Process selected payments (card)"
-msgstr "Verwerk geselecteerde betalingen (pin)"
-
-#: admin.py
-msgid "Process selected payments (Thalia Pay, only if enabled)"
-msgstr ""
-"Verwerk geselecteerde betalingen (Thalia Pay, alleen indien beschikbaar)"
-
-#: admin.py
-msgid "Process selected payments (wire)"
-msgstr "Verwerk geselecteerde betalingen (overboeking)"
 
 #: admin.py tests/test_admin.py
 #, python-format
@@ -149,15 +132,15 @@ msgstr "geldig tot"
 msgid "signature"
 msgstr "handtekening"
 
-#: admin_views.py tests/test_admin_views.py
+#: admin_views.py
 #, python-format
-msgid "Successfully processed %s."
-msgstr "%s succesvol verwerkt."
+msgid "Successfully paid %s."
+msgstr "%s succesvol betaald."
 
-#: admin_views.py tests/test_admin_views.py
+#: admin_views.py
 #, python-format
-msgid "Could not process %s."
-msgstr "%s kon niet worden verwerkt."
+msgid "Could not pay %s."
+msgstr "%s kon niet worden betaald."
 
 #: apps.py
 msgid "Payments"
@@ -413,12 +396,22 @@ msgid "You have not made any payments during this period."
 msgstr "Je hebt geen betalingen gedaan in deze periode."
 
 #: templates/payments/widgets/payment.html
-msgid "Unprocessed"
-msgstr "Onverwerkt"
+msgid "Unpaid"
+msgstr "Nog niet betaald"
 
 #: templates/payments/widgets/payment.html
-msgid "Processed"
-msgstr "Verwerkt"
+msgid "Paid"
+msgstr "Betaald"
+
+#: tests/test_admin_views.py
+#, python-format
+msgid "Successfully processed %s."
+msgstr "%s succesvol verwerkt."
+
+#: tests/test_admin_views.py
+#, python-format
+msgid "Could not process %s."
+msgstr "%s kon niet worden verwerkt."
 
 #: views.py
 msgid "Bank account saved successfully."
