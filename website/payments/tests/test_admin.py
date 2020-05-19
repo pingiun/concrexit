@@ -737,17 +737,13 @@ class BatchAdminTest(TestCase):
         request.user = self.user
         self.admin.changeform_view(request, b.id)
 
-        changeform_view_mock.assert_called_once_with(
-            request, b.id, "", {"processed": True, "batch": b}
-        )
+        changeform_view_mock.assert_called_once_with(request, b.id, "", {"batch": b})
 
         changeform_view_mock.reset_mock()
 
         self.admin.changeform_view(request)
 
-        changeform_view_mock.assert_called_once_with(
-            request, None, "", {"processed": False, "batch": None}
-        )
+        changeform_view_mock.assert_called_once_with(request, None, "", {"batch": None})
 
 
 @freeze_time("2019-01-01")

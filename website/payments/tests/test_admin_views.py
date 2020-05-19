@@ -313,7 +313,7 @@ class BatchExportAdminViewTest(TestCase):
 
         self.assertEqual(
             response.content,
-            b"Account holder name,IBAN,Mandate id,Amount,Description,Mandate date\r\n"
+            b"Account holder,IBAN,Mandate Reference,Amount,Description,Mandate Date\r\n"
             b"Test1 Example,DE75512108001245126199,2,3.00,Thalia Pay payments for 2020-1,2020-01-01\r\n"
             b"Test2 Example,NL02ABNA0123456789,1,6.00,Thalia Pay payments for 2020-1,2020-01-01\r\n",
         )
