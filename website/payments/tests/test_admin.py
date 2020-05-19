@@ -693,7 +693,7 @@ class BatchAdminTest(TestCase):
     def test_delete_model_fail(self) -> None:
         batch = Batch.objects.create(processed=True)
         response = self.client.post(
-            reverse("admin:payments_payment_delete", args=(batch.id,)), {"post": "yes"},
+            reverse("admin:payments_batch_delete", args=(batch.id,)), {"post": "yes"},
         )
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Payment.objects.filter(id=batch.id).exists())

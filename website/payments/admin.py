@@ -443,16 +443,14 @@ class BatchAdmin(admin.ModelAdmin):
             return ("description",) + default_fields
         return default_fields
 
-    def delete_model(self, request, batch):
-        if batch.processed:
-            messages.error(request, _("You cannot delete a processed batch."))
-        else:
-            super().delete_model(request, batch)
-
     def has_delete_permission(self, request, obj=None):
         if isinstance(obj, Batch):
             if obj.processed:
                 return False
+        if request.POST and request.POST.get("action") == "delete_selected":
+            for id in request.POST.getlist("_selected_action"):
+                if Batch.objects.get(id=id).processed:
+                    return False
 
         return super().has_delete_permission(request, obj)
 
