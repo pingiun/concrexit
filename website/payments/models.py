@@ -135,7 +135,7 @@ class Batch(models.Model):
     )
 
     description = models.TextField(
-        verbose_name=_("description of batch"), default=_default_batch_description,
+        verbose_name=_("description"), default=_default_batch_description,
     )
 
     def save(
